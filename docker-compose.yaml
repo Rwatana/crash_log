@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+    app:
+        build: ./app
+        volumes:
+        - shared-logs:/app/logs
+        environment:
+        - LOG_FILE=/app/logs/shared.log
+
+    logger:
+        build: ./logger
+        volumes:
+        - shared-logs:/app/logs
+        depends_on:
+        - app
+        environment:
+        - LOG_FILE=/app/logs/shared.log
+
+volumes:
+    shared-logs:
